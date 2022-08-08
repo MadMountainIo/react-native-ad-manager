@@ -61,6 +61,7 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
     protected NativeCustomFormatAd nativeCustomTemplateAd;
     protected String nativeCustomTemplateAdClickableAsset;
     protected ThemedReactContext context;
+    protected NativeAd nativeAd;
     String[] testDevices;
     String adUnitID;
     AdSize[] validAdSizes;
@@ -488,6 +489,8 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
             return;
         }
 
+        this.nativeAd = nativeAd;
+
         WritableMap ad = Arguments.createMap();
         ad.putString("type", AD_TYPE_NATIVE);
         if (nativeAd.getHeadline() == null) {
@@ -634,6 +637,24 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
         this.customClickTemplateIds = Arrays.asList(customClickTemplateIds);
     }
 
+    public void recordImpression() {
+        if (this.nativeAd == null) return;
+        if (this.nativeAd instanceof NativeAd) return;
+
+        NativeCustomFormatAd ad = (NativeCustomFormatAd) this.nativeAd;
+
+        ad.recordImpression();
+    }
+
+    public void recordClick() {
+        if (this.nativeAd == null) return;
+        if (this.nativeAd instanceof NativeAd) return;
+
+        NativeCustomFormatAd ad = (NativeCustomFormatAd) this.nativeAd;
+
+        ad.performClick("image");
+    }
+
     @Override
     public void onAppEvent(String name, String info) {
         WritableMap event = Arguments.createMap();
@@ -672,6 +693,9 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
         }
         if (this.adLoader != null) {
             this.adLoader = null;
+        }
+        if (this.nativeAd != null) {
+            this.nativeAd.destroy();
         }
     }
 }

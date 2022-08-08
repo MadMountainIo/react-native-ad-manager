@@ -46,6 +46,8 @@ public class RNAdManagerNativeViewManager extends ViewGroupManager<NativeAdViewC
     public static final String EVENT_AD_CUSTOM_CLICK = "onAdCustomClick";
     public static final String EVENT_APP_EVENT = "onAppEvent";
     public static final int COMMAND_RELOAD_AD = 1;
+    public static final int COMMAND_RECORD_IMPRESSION = 2;
+    public static final int COMMAND_RECORD_CLICK = 3;
 
     private static final String REACT_CLASS = "CTKAdManageNative";
     private final ReactApplicationContext applicationContext;
@@ -244,7 +246,9 @@ public class RNAdManagerNativeViewManager extends ViewGroupManager<NativeAdViewC
     @Override
     public Map<String, Integer> getCommandsMap() {
         return MapBuilder.of(
-            "reloadAd", COMMAND_RELOAD_AD
+            "reloadAd", COMMAND_RELOAD_AD,
+            "recordImpression", COMMAND_RECORD_IMPRESSION,
+            "recordClick", COMMAND_RECORD_CLICK
         );
     }
 
@@ -253,6 +257,12 @@ public class RNAdManagerNativeViewManager extends ViewGroupManager<NativeAdViewC
         switch (commandId) {
             case COMMAND_RELOAD_AD:
                 root.reloadAd();
+                break;
+            case COMMAND_RECORD_IMPRESSION:
+                root.recordImpression();
+                break;
+            case COMMAND_RECORD_CLICK:
+                root.recordClick();
                 break;
         }
     }

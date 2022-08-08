@@ -220,6 +220,22 @@ export default (Component: JSXElementConstructor<any>) =>
       );
     }
 
+    recordImpression() {
+      UIManager.dispatchViewManagerCommand(
+        findNodeHandle(this),
+        UIManager.getViewManagerConfig(ComponentName).Commands.recordImpression,
+        []
+      );
+    }
+
+    recordClick() {
+      UIManager.dispatchViewManagerCommand(
+        findNodeHandle(this),
+        UIManager.getViewManagerConfig(ComponentName).Commands.recordClick,
+        []
+      );
+    }
+
     renderAdComponent(componentProps: INativeAdProps) {
       if (!this.state.nativeAd) {
         return null;
