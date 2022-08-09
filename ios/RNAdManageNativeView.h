@@ -41,10 +41,13 @@
 @property (nonatomic, copy) RCTBubblingEventBlock onAdOpened;
 @property (nonatomic, copy) RCTBubblingEventBlock onAdClosed;
 @property (nonatomic, copy) RCTBubblingEventBlock onAdCustomClick;
+@property (nonatomic, copy) RCTBubblingEventBlock onAdImpression;
 
 - (instancetype)initWithBridge:(RCTBridge *)bridge;
 - (void)registerViewsForInteraction:(NSArray<UIView *> *)clickableViews;
 - (void)reloadAd;
 - (void)loadAd:(RNAdManageNativeManager *)adManager;
+- (void)recordImpression;
+- (void)recordClick;
 
 @end

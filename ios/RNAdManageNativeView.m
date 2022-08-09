@@ -189,6 +189,21 @@ static NSString *const kAdTypeTemplate = @"template";
     }
 }
 
+- (void)recordImpression {
+    if (self.nativeCustomTemplateAd != nil) {
+        [self.nativeCustomTemplateAd recordImpression];
+    }
+    if (self.onAdImpression) {
+        self.onAdImpression(nil);
+    }
+}
+
+- (void)recordClick {
+    if (self.nativeCustomTemplateAd != nil) {
+        [self.nativeCustomTemplateAd performClickOnAssetWithKey:@"image"];
+    }
+}
+
 - (void)setCustomTemplateIds:(NSArray *)customTemplateIds
 {
     _customTemplateIds = customTemplateIds;
@@ -464,7 +479,7 @@ static NSString *const kAdTypeTemplate = @"template";
 
     [self triggerCustomAdLoadedEvent:self.nativeCustomTemplateAd];
 
-    [self.nativeCustomTemplateAd recordImpression];
+    // [self.nativeCustomTemplateAd recordImpression];
 
     self.nativeAdView = nil;
 

@@ -165,6 +165,30 @@ RCT_EXPORT_METHOD(reloadAd:(nonnull NSNumber *)reactTag)
     }];
 }
 
+RCT_EXPORT_METHOD(recordImpression:(nonnull NSNumber *)reactTag)
+{
+    [_bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RNAdManageNativeView *> *viewRegistry) {
+        RNAdManageNativeView *view = viewRegistry[reactTag];
+        if (![view isKindOfClass:[RNAdManageNativeView class]]) {
+            RCTLogError(@"Invalid view returned from registry, expecting RNAdManageNativeView, got: %@", view);
+        } else {
+            [view recordImpression];
+        }
+    }];
+}
+
+RCT_EXPORT_METHOD(recordClick:(nonnull NSNumber *)reactTag)
+{
+    [_bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RNAdManageNativeView *> *viewRegistry) {
+        RNAdManageNativeView *view = viewRegistry[reactTag];
+        if (![view isKindOfClass:[RNAdManageNativeView class]]) {
+            RCTLogError(@"Invalid view returned from registry, expecting RNAdManageNativeView, got: %@", view);
+        } else {
+            [view recordClick];
+        }
+    }];
+}
+
 RCT_CUSTOM_VIEW_PROPERTY(adsManager, NSString, RNAdManageNativeView)
 {
 //    RNAdManageNativeManager *nativeAdManager = [_bridge moduleForClass:[RNAdManageNativeManager class]];
@@ -188,5 +212,6 @@ RCT_EXPORT_VIEW_PROPERTY(onAdFailedToLoad, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onAdOpened, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onAdClosed, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onAdCustomClick, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onAdImpression, RCTBubblingEventBlock)
 
 @end
