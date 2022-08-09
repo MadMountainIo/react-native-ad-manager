@@ -61,7 +61,7 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
     protected NativeCustomFormatAd nativeCustomTemplateAd;
     protected String nativeCustomTemplateAdClickableAsset;
     protected ThemedReactContext context;
-    protected NativeAd nativeAd;
+    protected NativeCustomFormatAd nativeAd;
     String[] testDevices;
     String adUnitID;
     AdSize[] validAdSizes;
@@ -224,6 +224,11 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
             public void onAdClosed() {
                 WritableMap event = Arguments.createMap();
                 sendEvent(RNAdManagerNativeViewManager.EVENT_AD_CLOSED, event);
+            }
+
+            @Override
+            public void onAdImpression() {
+                sendEvent(RNAdManagerNativeViewManager.EVENT_AD_IMPRESSION, null);
             }
         }).withNativeAdOptions(adOptions);
 
@@ -458,6 +463,8 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
             return;
         }
 
+        this.nativeAd = nativeCustomTemplateAd;
+
         WritableMap ad = Arguments.createMap();
         ad.putString("type", AD_TYPE_TEMPLATE);
         ad.putString("templateID", nativeCustomTemplateAd.getCustomFormatId());
@@ -488,8 +495,6 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
             sendEvent(RNAdManagerNativeViewManager.EVENT_AD_LOADED, event);
             return;
         }
-
-        this.nativeAd = nativeAd;
 
         WritableMap ad = Arguments.createMap();
         ad.putString("type", AD_TYPE_NATIVE);
@@ -639,20 +644,14 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
 
     public void recordImpression() {
         if (this.nativeAd == null) return;
-        if (this.nativeAd instanceof NativeAd) return;
 
-        NativeCustomFormatAd ad = (NativeCustomFormatAd) this.nativeAd;
-
-        ad.recordImpression();
+        this.nativeAd.recordImpression();
     }
 
     public void recordClick() {
         if (this.nativeAd == null) return;
-        if (this.nativeAd instanceof NativeAd) return;
 
-        NativeCustomFormatAd ad = (NativeCustomFormatAd) this.nativeAd;
-
-        ad.performClick("image");
+        this.nativeAd.performClick("image");
     }
 
     @Override
