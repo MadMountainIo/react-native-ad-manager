@@ -486,7 +486,7 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
 
         sendEvent(RNAdManagerNativeViewManager.EVENT_AD_LOADED, ad);
 
-        nativeCustomTemplateAd.recordImpression();
+//        nativeCustomTemplateAd.recordImpression();
     }
 
     private void setNativeAd(NativeAd nativeAd) {
