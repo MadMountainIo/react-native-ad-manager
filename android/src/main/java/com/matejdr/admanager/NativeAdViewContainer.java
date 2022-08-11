@@ -173,7 +173,13 @@ public class NativeAdViewContainer extends ReactViewGroup implements AppEventLis
                                 }
                             });
                     } else {
-                        builder.forCustomFormatAd(curCustomTemplateID, NativeAdViewContainer.this, null);
+                        builder
+                            .forCustomFormatAd(curCustomTemplateID, NativeAdViewContainer.this, new NativeCustomFormatAd.OnCustomClickListener() {
+                                @Override
+                                public void onCustomClick(@NonNull NativeCustomFormatAd nativeCustomFormatAd, @NonNull String s) {
+                                    Log.d("NativeAdViewContainer", "Custom Click: " + nativeCustomFormatAd.getCustomFormatId() + " " + s);
+                                }
+                            });
                     }
                 }
             }

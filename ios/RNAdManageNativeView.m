@@ -475,6 +475,10 @@ static NSString *const kAdTypeTemplate = @"template";
         [self.nativeCustomTemplateAd setCustomClickHandler:^(NSString *assetID){
             [self triggerAdCustomClickEvent:assetID];
         }];
+    } else {
+        [self.nativeCustomTemplateAd setCustomClickHandler:^(NSString * _Nonnull assetID) {
+            NSLog(@"CUSTOM CLICK!");
+        }];
     }
 
     [self triggerCustomAdLoadedEvent:self.nativeCustomTemplateAd];
